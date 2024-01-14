@@ -14,49 +14,55 @@ namespace DesafioFundamentos.Models
 
         public void AdicionarVeiculo()
         {
-            // TODO: Pedir para o usuário digitar uma placa (ReadLine) e adicionar na lista "veiculos"
-            // *IMPLEMENTE AQUI*
-            Console.WriteLine("Digite a placa do veículo para estacionar:");
+            // Solicita ao usuario a placa do veiculo, e adiciona na lista de veiculos
+            Console.WriteLine("Digite a placa do veículo para estacionar: ");
+            veiculos.Add(Console.ReadLine());
         }
 
         public void RemoverVeiculo()
         {
-            Console.WriteLine("Digite a placa do veículo para remover:");
+            // Solicita ao usuario a placa do veiculo
+            Console.WriteLine("Digite a placa para remover seu veículo: ");
+            string placa = Console.ReadLine();
 
-            // Pedir para o usuário digitar a placa e armazenar na variável placa
-            // *IMPLEMENTE AQUI*
-            string placa = "";
+            Boolean validaRemocao = false;
+            do{
+                // Verifica se o veículo existe, e remove ele da lista
+                if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
+                {
 
-            // Verifica se o veículo existe
-            if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
-            {
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-
-                // TODO: Pedir para o usuário digitar a quantidade de horas que o veículo permaneceu estacionado,
-                // TODO: Realizar o seguinte cálculo: "precoInicial + precoPorHora * horas" para a variável valorTotal                
-                // *IMPLEMENTE AQUI*
-                int horas = 0;
-                decimal valorTotal = 0; 
-
-                // TODO: Remover a placa digitada da lista de veículos
-                // *IMPLEMENTE AQUI*
-
-                Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
-            }
-            else
-            {
-                Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente");
-            }
+                Console.WriteLine(" Informe a quantidade de horas que o veículo permaneceu estacionado: ");
+                
+                decimal custoTotal = 0;
+                int horasEstacionadas = 0;
+                // Converte a hora digitada para int
+                horasEstacionadas= Convert.ToInt32(Console.ReadLine());
+                // Realiza o cálculo de custo total
+                custoTotal = precoInicial + (precoPorHora * horasEstacionadas); 
+                // Remove o veículo cuja placa foi digitada
+                veiculos.Remove(placa);
+                // flag verdadeira para sair do looping
+                validaRemocao = true;
+                Console.WriteLine($"O veículo {placa} foi removido com sucesso, e o custo total foi de: R$ {custoTotal}");
+                }
+                else
+                {
+                // Caso digite a placa errada, ou o veículo não existe no estacionamento
+                Console.WriteLine("Desculpe, não existe nenhum carro estacionado com a placa informada");
+                Console.WriteLine("Tente digitar a placa do veículo novamente: ");
+                placa = Console.ReadLine();
+                }
+          
+            }while(validaRemocao == false);
+              
         }
-
         public void ListarVeiculos()
         {
-            // Verifica se há veículos no estacionamento
+            // Verifica se há veículos no estacionamento, e exibe a lista de veículos estacionados
             if (veiculos.Any())
             {
-                Console.WriteLine("Os veículos estacionados são:");
-                // TODO: Realizar um laço de repetição, exibindo os veículos estacionados
-                // *IMPLEMENTE AQUI*
+                Console.WriteLine($"Os veículos estacionados são:{string.Join(", ", veiculos)}");
+               
             }
             else
             {
